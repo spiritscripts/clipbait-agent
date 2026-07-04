@@ -62,10 +62,22 @@ curl -s -X POST https://app.clipbait.ai/api/live/start \
 ```
 Clipbait then watches the live broadcast and produces clips automatically as viral moments happen — no further calls needed.
 
-## Prefer MCP? (ChatGPT / claude.ai / Claude Code)
-Instead of raw HTTP, connect Clipbait's MCP server:
+### Check credits before a job
+```bash
+curl -s https://app.clipbait.ai/api/clips/credits -H "X-API-Key: $CLIPBAIT_API_KEY"
+# → { credits_remaining, credits_total, plan }
+```
+
+## Prefer MCP?
+**Remote (ChatGPT / claude.ai / Claude Code)** — connect the hosted server, nothing runs locally:
 `https://app.clipbait.ai/api/mcp/<CLIPBAIT_API_KEY>`
-Tools: `generate_clips`, `get_job`, `list_recent_clips`, `start_live_autoclip`, `probe_video`.
+
+**Local (Claude Desktop / Cursor / Cline / Windsurf)** — run the npm package as a stdio server. This is also the only way to use `download_clip` (it saves to disk):
+```json
+{ "mcpServers": { "clipbait": { "command": "npx", "args": ["-y", "clipbait@latest", "mcp"], "env": { "CLIPBAIT_API_KEY": "cbk_live_..." } } } }
+```
+
+Tools: `generate_clips`, `get_job`, `list_recent_clips`, `get_credits`, `start_live_autoclip`, `probe_video`, `download_clip` (saves a finished clip to `~/Downloads`).
 
 ## Typical flow
 1. `probe_video` to confirm length (and warn if it'll cost a lot of credits).
