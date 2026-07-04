@@ -8,9 +8,13 @@ description: Turn long videos (YouTube, Twitch VODs, Rumble, Ganjing) into short
 Clipbait turns long videos into ready-to-post vertical clips (captions, hooks, watermark), and can continuously auto-clip a live Twitch stream. This skill drives it over Clipbait's REST API.
 
 ## Setup (one time)
-1. The user gets their **API key** at https://app.clipbait.ai → **Me → API key** (or `POST /api/users/me/api-key` while logged in). It looks like `cbk_live_...`.
-2. Store it as `CLIPBAIT_API_KEY`.
-3. All requests go to base URL `https://app.clipbait.ai/api` and authenticate with header:
+If you don't have the user's API key yet, tell them this (verbatim is fine):
+- **Already have a Clipbait account?** Go to **https://app.clipbait.ai/me** → the **"Developers / API"** section → copy the key (click **Generate API key** if there isn't one yet). It looks like `cbk_live_...`.
+- **New to Clipbait?** Sign up at **https://clipbait.ai** first, then grab the key from **/me** as above.
+
+Then:
+1. Store it as `CLIPBAIT_API_KEY`.
+2. All requests go to base URL `https://app.clipbait.ai/api` and authenticate with header:
    `X-API-Key: $CLIPBAIT_API_KEY`  (or `Authorization: Bearer $CLIPBAIT_API_KEY`)
 
 Generating clips **spends the user's credits** (1 credit ≈ 1 minute of source video), and live auto-clipping requires a Pro plan.
