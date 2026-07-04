@@ -79,17 +79,17 @@ curl -s https://app.clipbait.ai/api/clips/credits -H "X-API-Key: $CLIPBAIT_API_K
 
 Tools: `generate_clips`, `get_job`, `list_recent_clips`, `get_credits`, `start_live_autoclip`, `probe_video`, `download_clip` (saves a finished clip to `~/Downloads`), `list_social_accounts`, `schedule_post`, `list_scheduled_posts`, `cancel_scheduled_post`.
 
-## Schedule a clip to social (X, TikTok, YouTube, Facebook)
-After clips are ready, you can schedule them to connected accounts. Check connections first, then schedule:
+## Schedule a clip to social (X / Twitter)
+After clips are ready, you can schedule them to X. **Only X posting is live today — TikTok, Facebook, and Instagram are coming soon.** Check the connection first, then schedule:
 ```bash
 curl -s https://app.clipbait.ai/api/auth/social/status -H "X-API-Key: $CLIPBAIT_API_KEY"
-# → { twitter:{connected}, tiktok:{...}, youtube:{...}, facebook:{...} }
+# → { twitter:{connected}, ... }
 
 curl -s -X POST https://app.clipbait.ai/api/scheduled-posts \
   -H "X-API-Key: $CLIPBAIT_API_KEY" -H "Content-Type: application/json" \
-  -d '{"clipUrl":"<finished clip url>","platforms":["tiktok"],"scheduledTime":"2026-05-01T15:00:00Z","caption":"..."}'
+  -d '{"clipUrl":"<finished clip url>","platforms":["x"],"scheduledTime":"2026-05-01T15:00:00Z","caption":"..."}'
 ```
-`platforms`: `x` | `tiktok` | `youtube` | `facebook` (must be connected). `scheduledTime` must be in the future. List with `GET /scheduled-posts`, cancel with `DELETE /scheduled-posts/:id`.
+`platforms`: `["x"]` only for now. `scheduledTime` must be in the future. List with `GET /scheduled-posts`, cancel with `DELETE /scheduled-posts/:id`.
 
 ## Typical flow
 1. `probe_video` to confirm length (and warn if it'll cost a lot of credits).
